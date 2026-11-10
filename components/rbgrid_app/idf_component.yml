@@ -1,0 +1,11 @@
+dependencies:
+  # LittleFS for the configuration and UI partitions.
+  joltwallet/littlefs: ==1.14.0
+  # mDNS discovery: rbgrid-<mac4>.local, _http._tcp + _rbgrid._tcp TXT{fw,api,https}, so apps find
+  # the hub without a manual IP address.
+  espressif/mdns: "^1.2.0"
+  # rbamp — rbAmp I2C metering module client (ESP-IDF component, MIT), fetched from its public
+  # repository at a fixed release tag.
+  rbamp:
+    git: https://github.com/rb-amp/rbamp-esp-idf.git
+    version: v1.7.2
