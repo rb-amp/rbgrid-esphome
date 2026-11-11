@@ -81,7 +81,11 @@ external_components:
 ```
 
 The component builds the metering core from `components/` of the same checkout, and brings its own partition table
-(16 MB flash required). Compile and flash with `esphome run <config>.yaml` (USB the first time, then over the air).
+(16 MB flash required), with the app at `0x20000`. **Do the first USB install with the ready-made factory image**
+(see *Install* above), then put your own build on over the air: `esphome run <config>.yaml` with the hub on the network,
+or Install → Wirelessly in the dashboard. ESPHome's own USB paths (`esphome run`/`upload` to a serial port, and Manual
+download → Factory format) write the app at `0x10000`, which does not match this partition table. If you must flash
+your build over USB, use esptool with the offsets from the build's `flasher_args.json`.
 
 ## Configuration (YAML)
 
@@ -208,5 +212,6 @@ They sit at the same addresses as on the standalone hub.
 - A point slot freed and taken by a new point continues that slot's lifetime entities. HA statistics can show a step
   there; prefer the per-point series the integration imports.
 - The ESPHome build has no web app. To use the RBgrid web app, run the standalone firmware instead.
-- ESPHome's own "factory" download (Dashboard → Manual download → Factory format) fails for this partition table
-  (it assumes the app at 0x10000; here it is at 0x20000). Use the release's factory image, `esphome run`, or OTA.
+- ESPHome's USB paths fail for this partition table: Manual download → Factory format, and `esphome run`/`upload` to
+  a serial port. They put the app at 0x10000; here it is at 0x20000. Use the release's factory image for the first USB
+  install, then over-the-air updates.
